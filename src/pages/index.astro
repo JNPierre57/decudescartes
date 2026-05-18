@@ -1,0 +1,88 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getLatestShorts } from '../lib/youtube';
+
+const shorts = await getLatestShorts();
+const liveNow = false;
+---
+
+<MainLayout title="Déçu des Cartes">
+  <main>
+    <section class="section-shell flex items-end" id="hero">
+      <video class="video-bg" autoplay muted loop playsinline poster="/images/hero-fallback.jpg">
+        <source src="/videos/hero-hyperspace.mp4" type="video/mp4" />
+      </video>
+      <div class="video-overlay absolute inset-0"></div>
+      <div class="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24 pt-40">
+        <p class="mb-4 text-sm uppercase tracking-[0.35em] text-spaceBlue">Journal de bord</p>
+        <h1 class="text-5xl font-semibold uppercase tracking-[0.15em] md:text-7xl">DÉÇU DES CARTES</h1>
+        <p class="mt-6 max-w-xl text-xl text-offwhite/90">Expéditions spatiales approximatives.</p>
+        <a href="#live" class="mt-10 inline-flex rounded border border-hud/80 bg-hud/20 px-6 py-3 text-sm uppercase tracking-[0.2em] shadow-hud transition hover:bg-hud/30">Rejoindre le stream</a>
+      </div>
+    </section>
+
+    <section class="section-shell flex items-center" id="identite">
+      <video class="video-bg" autoplay muted loop playsinline poster="/images/identity-fallback.jpg" loading="lazy">
+        <source src="/videos/identity-flight.mp4" type="video/mp4" />
+      </video>
+      <div class="video-overlay absolute inset-0"></div>
+      <div class="relative z-10 mx-auto w-full max-w-4xl px-6">
+        <div class="hud-line mb-6"></div>
+        <p class="text-2xl leading-relaxed text-offwhite/90 md:text-3xl">Combat, sauvetage, évacuation, longs trajets inutiles et décisions discutables.</p>
+      </div>
+    </section>
+
+    <section class="section-shell flex items-center" id="elite">
+      <video class="video-bg" autoplay muted loop playsinline poster="/images/elite-fallback.jpg" loading="lazy">
+        <source src="/videos/elite-combat.mp4" type="video/mp4" />
+      </video>
+      <div class="video-overlay absolute inset-0"></div>
+      <div class="relative z-10 mx-auto w-full max-w-5xl px-6">
+        <h2 class="text-4xl uppercase tracking-[0.2em] md:text-6xl">Elite Dangerous</h2>
+        <p class="mt-6 max-w-2xl text-lg text-offwhite/85 md:text-2xl">4 à 5 soirs par semaine, quelque part entre la science-fiction et l’accident industriel.</p>
+      </div>
+    </section>
+
+    <section class="bg-deep px-6 py-24" id="types">
+      <div class="mx-auto max-w-6xl">
+        <h3 class="text-2xl uppercase tracking-[0.2em] text-spaceBlue">Types de transmission</h3>
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          {['Community Goals', 'Sauvetage & évacuation', 'Exploration', 'Builds douteux', 'Hutton Orbital & autres mauvaises idées'].map((item) => (
+            <article class="rounded border border-hud/30 bg-white/5 p-6">
+              <p class="text-lg uppercase tracking-wider">{item}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gradient-to-b from-deep to-black px-6 py-24" id="live">
+      <div class="mx-auto max-w-4xl rounded border border-spaceBlue/40 bg-spaceBlue/10 p-10 text-center">
+        <p class="text-sm uppercase tracking-[0.35em] text-spaceBlue">Statut</p>
+        <p class="mt-4 text-3xl uppercase tracking-[0.2em]">{liveNow ? 'Transmission en cours' : 'Prochaine transmission bientôt'}</p>
+        <a class="mt-8 inline-flex rounded border border-hud/80 px-6 py-3 uppercase tracking-[0.2em] hover:bg-hud/20" href="https://www.twitch.tv/" target="_blank">Ouvrir Twitch</a>
+      </div>
+    </section>
+
+    <section class="bg-deep px-6 py-24" id="shorts">
+      <div class="mx-auto max-w-6xl">
+        <h3 class="text-2xl uppercase tracking-[0.2em] text-spaceBlue">Derniers Shorts</h3>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {shorts.map((short) => (
+            <a href={short.url} target="_blank" class="overflow-hidden rounded border border-white/10 bg-white/5 transition hover:border-hud/60">
+              <img src={short.thumbnail} alt={short.title} class="h-56 w-full object-cover" loading="lazy" />
+              <p class="p-4 text-sm text-offwhite/90">{short.title}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 bg-black px-6 py-12 text-center">
+    <p class="text-sm uppercase tracking-[0.35em] text-offwhite/70">FIN DE TRANSMISSION</p>
+    <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-offwhite/80">
+      <a href="#">Twitch</a><a href="#">YouTube</a><a href="#">TikTok</a><a href="#">Instagram</a><a href="#">Kick</a><a href="#">Discord</a>
+    </div>
+  </footer>
+</MainLayout>

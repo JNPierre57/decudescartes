@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  @apply m-0 bg-deep text-offwhite antialiased;
+  scroll-behavior: smooth;
+}
+
+.section-shell {
+  @apply relative min-h-screen overflow-hidden;
+}
+
+.video-bg {
+  @apply absolute inset-0 h-full w-full object-cover;
+}
+
+.video-overlay {
+  background: linear-gradient(180deg, rgba(3, 4, 8, 0.7) 0%, rgba(3, 4, 8, 0.35) 30%, rgba(3, 4, 8, 0.85) 100%);
+}
+
+.hud-line {
+  @apply h-px w-20 bg-hud/70;
+}
